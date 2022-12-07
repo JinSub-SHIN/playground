@@ -1,0 +1,18 @@
+.redBox {
+	background: red;
+	margin: 0 auto;
+	display: block;
+	padding: 40px 0;
+	text-align: center;
+	color: white;
+	font-size: 40px;
+	font-weight: bold;
+	opacity: 0;
+	transition: 0.5s;
+	width: 0%;
+}
+
+.show {
+	opacity: 1;
+	width: 100%;
+}
