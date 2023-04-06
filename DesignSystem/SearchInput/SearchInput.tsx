@@ -15,10 +15,7 @@ export interface SearchIconParams {
 	suffix?: React.ReactNode
 }
 
-const StyledRow = styled(Row)`
-	margin-left: 500px;
-	margin-top: 200px;
-`
+const StyledRow = styled(Row)``
 
 const HeaderCol = styled(Col)`
 	margin-left: 10px;
@@ -40,7 +37,7 @@ const SearchInput = (params: SearchIconParams) => {
 		<>
 			<Form onFinish={onFinish}>
 				<StyledRow>
-					<HeaderCol flex="500px">
+					<HeaderCol flex="auto">
 						<Form.Item name="searchData">
 							<Input
 								placeholder=""
