@@ -1,8 +1,6 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { RootState } from 'redux/reducer/rootReducer'
-import { SearchOutlined } from '@ant-design/icons'
 import { Col, Input, Row, Form } from 'antd'
 import { getSearchData } from 'api/axios/search/service'
 import { CustomButton } from '../Button/CustomButton'
@@ -12,13 +10,21 @@ export interface SearchParam {
 	searchData: string
 }
 
-const StyledRow = styled(Row)``
+export interface SearchIconParams {
+	prefix?: React.ReactNode
+	suffix?: React.ReactNode
+}
+
+const StyledRow = styled(Row)`
+	margin-left: 500px;
+	margin-top: 200px;
+`
 
 const HeaderCol = styled(Col)`
 	margin-left: 10px;
 `
 
-const SearchData = () => {
+const SearchInput = (params: SearchIconParams) => {
 	const whereToSearch = useSelector((state: RootState) => state.search)
 	const onFinish = (values: SearchParam) => {
 		const params: SearchParam = {
@@ -34,14 +40,22 @@ const SearchData = () => {
 		<>
 			<Form onFinish={onFinish}>
 				<StyledRow>
-					<HeaderCol flex="auto">
+					<HeaderCol flex="500px">
 						<Form.Item name="searchData">
-							<Input placeholder="" prefix={<SearchOutlined />} />
+							<Input
+								placeholder=""
+								prefix={params.prefix}
+								suffix={params.suffix}
+							/>
 						</Form.Item>
 					</HeaderCol>
 					<HeaderCol flex="90px">
 						<Form.Item>
-							<CustomButton type="blueButton" htmlType="submit" title="검색" />
+							<CustomButton
+								type="primaryButton"
+								htmlType="submit"
+								title={'검색'}
+							/>
 						</Form.Item>
 					</HeaderCol>
 				</StyledRow>
@@ -50,4 +64,4 @@ const SearchData = () => {
 	)
 }
 
-export default SearchData
+export default SearchInput
