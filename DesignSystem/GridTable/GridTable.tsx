@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { Col, Row } from 'antd'
 import { ColumnType, TitleType } from 'pages/browser/information/TestGridTable'
-import { Button, Form, Select } from 'antd'
+import { Form, Select } from 'antd'
 import { Store } from 'antd/es/form/interface'
+import { CustomButton } from '../Button/CustomButton'
 
 export interface Grid {
 	rowCount: number
@@ -13,13 +14,6 @@ export interface ColGroup {
 	key: number
 	colGroupCount: number
 }
-
-const TableColumn = styled.div`
-	width: 100%;
-	height: 72px;
-	background-color: #ffffff;
-	float: left;
-`
 
 const TableBox = styled.div`
 	border-top: 0.5px solid #939dad;
@@ -38,10 +32,11 @@ const HeaderCol = styled(Col)`
 `
 
 const ContentCol = styled(Col)`
+	width: 35%;
 	height: 72px;
 	background-color: #ffffff;
 	margin-left: 10px;
-	display: table;
+	padding-top: 19px;
 `
 
 const Title = styled.span`
@@ -51,26 +46,11 @@ const Title = styled.span`
 	vertical-align: middle;
 `
 
-const Content = styled.span`
-	font-size: 16px;
-	font-weight: 300;
-`
-
-const onFinish = (values: any) => {
-	console.log('Success:', values)
-}
-
-const { Option } = Select
-
-const onChange = (value: string) => {
-	console.log(value)
-}
-
 /**
- * 테이블 자동 생성기
+ * Row 당 Col 최대 2개 테이블 자동 생성기
  * @param gridObj Grid객체(rowCount: number , colGroup: colgroup[])
  * @param titleArray 테이블 Header 정보 데이터
- * @warnning 테이블 정보대로 파라미터를 전부 맞춰서 보내줘야함
+ * @check 테이블 정보대로 파라미터를 전부 맞춰서 보내줘야함
  * @returns
  */
 export const GridTable = (params: {
@@ -79,6 +59,10 @@ export const GridTable = (params: {
 	element: ColumnType
 	initialValues?: Store | undefined
 }) => {
+	const onFinish = (values: any) => {
+		console.log('Success:', values)
+	}
+
 	return (
 		<>
 			<Form onFinish={onFinish} initialValues={params.initialValues}>
@@ -86,7 +70,7 @@ export const GridTable = (params: {
 					{params.gridObj.colGroup.map((item, _) =>
 						item.colGroupCount == 1 ? (
 							<StyledRow key={item.key}>
-								<HeaderCol flex="154px">
+								<HeaderCol flex="10%">
 									<Title>{params.titleArray[item.key][0].kr}</Title>
 								</HeaderCol>
 								<ContentCol flex="auto">
@@ -97,15 +81,15 @@ export const GridTable = (params: {
 							</StyledRow>
 						) : (
 							<StyledRow key={item.key}>
-								<HeaderCol flex="154px">
+								<HeaderCol flex="10%">
 									<Title>{params.titleArray[item.key][0].kr}</Title>
 								</HeaderCol>
-								<ContentCol flex="auto">
+								<ContentCol flex="40%">
 									<Form.Item name={params.titleArray[item.key][0].en}>
 										{params.element[item.key][0]}
 									</Form.Item>
 								</ContentCol>
-								<HeaderCol flex="154px">
+								<HeaderCol flex="10%">
 									<Title>{params.titleArray[item.key][1].kr}</Title>
 								</HeaderCol>
 								<ContentCol flex="auto">
@@ -118,9 +102,7 @@ export const GridTable = (params: {
 					)}
 				</TableBox>
 				<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-					<Button type="primary" htmlType="submit">
-						Submit
-					</Button>
+					{/* <CustomButton type="primaryButton" htmlType="submit" title={'저장'} /> */}
 				</Form.Item>
 			</Form>
 		</>
