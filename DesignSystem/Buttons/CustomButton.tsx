@@ -1,8 +1,9 @@
-import { Button } from 'antd'
 import styled, { CSSProperties, css } from 'styled-components'
+import { Button } from 'antd'
+
 type ButtonType = {
 	type: string
-	title: string
+	title: string | React.ReactNode
 	size?: string
 	onClick?: () => void
 	htmlType?: 'button' | 'submit' | 'reset' | undefined
@@ -10,85 +11,84 @@ type ButtonType = {
 }
 
 // props size 값으로 분기
-const defaultButton = {
-	backgroundColor: 'white',
-	color: '#1c1c1c',
-}
-
 const primaryButton = {
-	backgroundColor: '#005fb8',
-	color: '#fff',
+	backgroundColor: ' #005BAC',
+	color: '#ffffff',
 }
 
-const lightPrimaryButton = {
-	backgroundColor: 'white',
-	borderColor: '#005fb8',
-	color: '#005fb8',
+const defaultButton = {
+	backgroundColor: ' #ffffff',
+	color: 'black',
+}
+
+const warningButton = {
+	backgroundColor: ' #ffffff',
+	color: 'red',
+	borderColor: 'red',
 }
 
 const buttonStyle = css<{ btnsize?: string; btntype: string }>`
-	// button width resize
-	${props =>
-		props.btnsize === 'small' &&
-		css`
-			width: 68px;
-			height: 46px;
-		`}
-
 	${props =>
 		props.btnsize === 'default' &&
 		css`
-			width: 208px;
+			width: 150px;
+			height: 32px;
 		`}
-
-	${props =>
-		props.btnsize === 'large' &&
-		css`
-			width: 432px;
-		`}
-
 	// button color style
 	${props =>
-		props.btntype === 'default' &&
-		css`
-			${defaultButton}
-		`}
-	${props =>
-		props.btntype === 'primary' &&
+		props.btntype === 'primaryButton' &&
 		css`
 			${primaryButton}
+			&:hover {
+				color: #ffffff !important;
+			}
 		`}
+
 	${props =>
-		props.btntype === 'lightPrimary' &&
+		props.btntype === 'defaultButton' &&
 		css`
-			${lightPrimaryButton}
+			${defaultButton}
+			&:hover {
+				color: black !important;
+				border-color: #d9d9d9 !important;
+			}
+		`}
+
+	${props =>
+		props.btntype === 'warningButton' &&
+		css`
+			${warningButton}
+			&:hover {
+				color: red !important;
+				border-color: red !important;
+			}
 		`}
 `
 
-const CustomButtonTag = styled(Button)`
-	height: 50px;
+const StyledButton = styled(Button)`
+	width: 100%;
+	height: 32px;
 	${buttonStyle}
 `
 
-const CustomButton = ({
-	type,
-	title,
-	size,
-	onClick,
-	htmlType,
-	style,
-}: ButtonType) => {
+/**
+ * @필수 (type) primaryButton | defaultButton | warningButton
+ * @필수 (title) string or ReactNode
+ * @선택 (size) default
+ * @선택 (htmlType) 'button' | 'submit' | 'reset' | undefined
+ * @선택 (style) CSSProperties
+ * @returns
+ */
+export const CustomButton = (params: ButtonType) => {
 	return (
-		<CustomButtonTag
-			btnsize={size}
-			btntype={type}
-			onClick={onClick}
-			htmlType={htmlType}
-			style={style}
+		<StyledButton
+			btnsize={params.size}
+			btntype={params.type}
+			htmlType={params.htmlType}
+			onClick={params.onClick}
+			style={params.style}
 		>
-			{title}
-		</CustomButtonTag>
+			{params.title}
+		</StyledButton>
 	)
 }
-
-export default CustomButton
