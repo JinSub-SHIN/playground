@@ -1,14 +1,26 @@
 import { Card, Col, Row } from 'antd'
 import { ReactNode } from 'react'
 import { CardDescription } from './CardDescription'
+import styled from 'styled-components'
 
 const { Meta } = Card
 
 export interface GirdCardProps {
 	clickFunction: (index: number) => void
 	title: string
-	description: VideoDescription[] | PhotoDescription[]
+	description: (
+		| PhotoDescription
+		| VideoDescription
+		| MeMoDescription
+		| DirectCameraDescription
+	)[]
 }
+
+export const Image = styled.img`
+	object-fit: initial;
+	min-height: 230px;
+	max-height: 230px;
+`
 
 export interface VideoDescription {
 	type: 'video'
@@ -25,6 +37,22 @@ export interface PhotoDescription {
 	department: string
 	time: string
 	hashtag: string[]
+	children: ReactNode
+}
+
+export interface MeMoDescription {
+	type: 'memo'
+	writer: string
+	content: string
+	time: string
+	children: ReactNode
+}
+
+export interface DirectCameraDescription {
+	type: 'direct'
+	department: string
+	conductor: string
+	workTime: string
 	children: ReactNode
 }
 
