@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import { ReactNode } from 'react'
-import { Card, Col, Row } from 'antd'
+import { Card } from 'antd'
 import { CardDescription } from './CardDescription'
-import { VideoDescription } from './GirdCard'
 import { CardTitle } from './CardTitle'
+import { useSelector } from 'react-redux'
+import { RootState } from 'redux/reducer/rootReducer'
 
 const { Meta } = Card
 
@@ -17,31 +18,32 @@ const Video = styled.video`
 	object-fit: initial;
 `
 
-export const DetailCard = (props: { children: ReactNode }) => {
-	const description: VideoDescription = {
-		type: 'video',
-		joinPerson: ['김영준', '곽선영', '신진섭'],
-		department: '와트',
-		time: '2022-05-18 17:02:11 (30초)',
-		hashtag: ['와트', '영상통화'],
-		children: (
-			<Video>
-				<source
-					src="http://www.tcpschool.com/lectures/sample_video_mp4.mp4"
-					type="video/mp4"
-				/>
-			</Video>
-		),
-	}
+export interface DetailProps {
+	children: ReactNode
+}
 
-	return (
-		<>
+export const DetailCard = (props: DetailProps) => {
+	const cardItem = useSelector((state: RootState) => state.cardList.details)
+
+	if (cardItem?.type == 'video') {
+		return (
 			<StyledCard cover={props.children}>
 				<Meta
-					title={<CardTitle title="안녕하세요" buttonType="video" />}
-					description={<CardDescription description={description} />}
+					title={<CardTitle title={cardItem.title} buttonType="video" />}
+					description={<CardDescription detail={cardItem} />}
 				/>
 			</StyledCard>
-		</>
-	)
+		)
+	} else if (cardItem?.type == 'photo') {
+		return (
+			<StyledCard cover={props.children}>
+				<Meta
+					title={<CardTitle title={cardItem.title} buttonType="video" />}
+					description={<CardDescription detail={cardItem} />}
+				/>
+			</StyledCard>
+		)
+	} else {
+		return <></>
+	}
 }

@@ -16,13 +16,17 @@ const { Meta } = Card
 
 export interface GirdCardProps {
 	clickFunction: (index: number) => void
-	title: string
 	description: (
 		| PhotoDescription
 		| VideoDescription
 		| MeMoDescription
 		| DirectCameraDescription
 	)[]
+	detail?:
+		| VideoDescriptionStoreOnly
+		| PhotoDescriptionStoreOnly
+		| MeMoDescriptionStoreOnly
+		| DirectCameraDescriptionStoreOnly
 }
 
 export const Image = styled.img`
@@ -36,9 +40,11 @@ export interface VideoDescription {
 	joinPerson: string[]
 	department: string
 	time: string
+	title: string
 	hashtag: string[]
 	star: boolean
 	children: ReactNode
+	url: string
 }
 
 export interface PhotoDescription {
@@ -49,6 +55,7 @@ export interface PhotoDescription {
 	hashtag: string[]
 	star: boolean
 	children: ReactNode
+	title: string
 }
 
 export interface MeMoDescription {
@@ -58,6 +65,7 @@ export interface MeMoDescription {
 	time: string
 	star: boolean
 	children: ReactNode
+	title: string
 }
 
 export interface DirectCameraDescription {
@@ -79,8 +87,10 @@ export interface VideoDescriptionStoreOnly {
 	joinPerson: string[]
 	department: string
 	time: string
+	title: string
 	hashtag: string[]
 	star: boolean
+	url: string
 }
 
 /**
@@ -91,8 +101,10 @@ export interface PhotoDescriptionStoreOnly {
 	joinPerson: string[]
 	department: string
 	time: string
+	title: string
 	hashtag: string[]
 	star: boolean
+	url: string
 }
 
 /**
@@ -102,8 +114,10 @@ export interface MeMoDescriptionStoreOnly {
 	type: 'memo'
 	writer: string
 	content: string
+	title: string
 	time: string
 	star: boolean
+	url: string
 }
 
 /**
@@ -116,6 +130,7 @@ export interface DirectCameraDescriptionStoreOnly {
 	conductor: string
 	workTime: string
 	dataUrl: string
+	url: string
 }
 
 const FlexTitle = styled.div`
@@ -138,15 +153,10 @@ const IconStyled = styled.img``
  *
  * @paramType GirdCardProps
  * @param clickFunction (index: number) => void
- * @param title string
  * @param description (PhotoDescription | VideoDescription | MeMoDescription | DirectCameraDescription)[]
  * @returns
  */
-export const GridCard = ({
-	clickFunction,
-	title,
-	description,
-}: GirdCardProps) => {
+export const GridCard = ({ clickFunction, description }: GirdCardProps) => {
 	const dispatch = useDispatch()
 	const cardItems = useSelector((state: RootState) => state.cardList.items)
 	const [cardIndex, setCardIndex] = useState<number>()
@@ -240,7 +250,6 @@ export const GridCard = ({
 	const handleOpen = (index: number) => {
 		setCardIndex(index)
 	}
-
 	return (
 		<>
 			<Row gutter={[16, 16]}>
@@ -255,7 +264,7 @@ export const GridCard = ({
 								<Meta
 									title={
 										<FlexTitle>
-											<TitleSpan>{title}</TitleSpan>
+											<TitleSpan>{}</TitleSpan>
 										</FlexTitle>
 									}
 									description={<CardDescription description={item} />}
@@ -272,7 +281,7 @@ export const GridCard = ({
 										<Meta
 											title={
 												<FlexTitle>
-													<TitleSpan>{title}</TitleSpan>
+													<TitleSpan>{item.title}</TitleSpan>
 													<Dropdown
 														menu={returnItems(true)}
 														placement="bottom"
@@ -294,7 +303,7 @@ export const GridCard = ({
 										<Meta
 											title={
 												<FlexTitle>
-													<TitleSpan>{title}</TitleSpan>
+													<TitleSpan>{item.title}</TitleSpan>
 													<Dropdown
 														menu={returnItems(false)}
 														placement="bottom"
