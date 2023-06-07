@@ -1,14 +1,5 @@
-import React, { ReactNode, useEffect, useState } from 'react'
-import { Button, PaginationProps } from 'antd'
-import { Table, Col, Row } from 'antd'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import {
-	DoubleLeftOutlined,
-	DoubleRightOutlined,
-	LeftOutlined,
-	PrinterFilled,
-	RightOutlined,
-} from '@ant-design/icons'
 
 const PagingDiv = styled.div`
 	-webkit-user-select: none;
@@ -39,34 +30,6 @@ const DefaultDiv = styled.div`
 	width: 20px;
 `
 
-const PagingButton = styled(Button)`
-	/* width: 40px; */
-	box-shadow: none;
-	border: none;
-	text-align: center;
-	background-color: white;
-
-	&:active {
-		background-color: white !important;
-		/* width: 40px !important; */
-	}
-`
-
-const PagingButtonActive = styled(Button)`
-	/* width: 10px; */
-	box-shadow: none;
-	border: none;
-	text-align: center;
-	background-color: white;
-	color: blue;
-	font-weight: 600;
-	font-size: 18px;
-
-	&:active {
-		background-color: white !important;
-	}
-`
-
 const PageNation = (params: { pageSize: number }) => {
 	// 현재 위치중인 페이지
 	const [currentPage, setCurrentPage] = useState<number>(1)
@@ -92,7 +55,6 @@ const PageNation = (params: { pageSize: number }) => {
 	}, [firstPage])
 
 	const handleNextPage = () => {
-		console.log(firstPage)
 		const nextNumber = firstPage + 10
 		if (nextNumber > params.pageSize) {
 			return
@@ -101,7 +63,6 @@ const PageNation = (params: { pageSize: number }) => {
 	}
 
 	const handleFrontPage = () => {
-		console.log(firstPage)
 		const nextNumber = firstPage - 10
 		if (nextNumber < 0) {
 			return
