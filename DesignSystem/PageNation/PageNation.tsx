@@ -34,15 +34,6 @@ const DefaultDiv = styled.div`
 `
 
 const PageNation = (params: { pageSize: number; location: string }) => {
-	useEffect(() => {
-		// 페이지네이션 사용공간이 바뀔 경우만 호출됨
-		const pageData: NowPageType = {
-			key: params.location,
-			status: 1,
-		}
-		dispatch(setPageNation(pageData))
-	}, [params.location])
-
 	const dispatch = useDispatch()
 	const reduxPageNumber = useSelector(
 		(state: RootState) => state.pagNation.status,
@@ -57,6 +48,13 @@ const PageNation = (params: { pageSize: number; location: string }) => {
 	const [pageSize, setPageSize] = useState<number[]>([])
 
 	useEffect(() => {
+		// 페이지네이션 사용공간이 바뀔 경우만 호출됨
+		const pageData: NowPageType = {
+			key: params.location,
+			status: 1,
+		}
+		dispatch(setPageNation(pageData))
+
 		// 배열만들고 현재 사용자의 페이지에 따라 배열 수정
 		const keyboard = Array.from(
 			{ length: params.pageSize },
@@ -69,7 +67,7 @@ const PageNation = (params: { pageSize: number; location: string }) => {
 		})
 
 		setPageSize(filterArray)
-	}, [firstPage])
+	}, [params.location, firstPage])
 
 	const handleNextPage = () => {
 		const nextNumber = firstPage + 10
