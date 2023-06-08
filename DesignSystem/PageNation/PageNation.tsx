@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { NowPageType, setPageNation } from 'redux/action/pageNationSlice'
+import { RootState } from 'redux/reducer/rootReducer'
 import styled from 'styled-components'
 
 const PagingDiv = styled.div`
@@ -30,9 +33,23 @@ const DefaultDiv = styled.div`
 	width: 20px;
 `
 
-const PageNation = (params: { pageSize: number }) => {
+const PageNation = (params: { pageSize: number; location: string }) => {
+	useEffect(() => {
+		// 페이지네이션 사용공간이 바뀔 경우만 호출됨
+		const pageData: NowPageType = {
+			key: params.location,
+			status: 1,
+		}
+		dispatch(setPageNation(pageData))
+	}, [params.location])
+
+	const dispatch = useDispatch()
+	const reduxPageNumber = useSelector(
+		(state: RootState) => state.pagNation.status,
+	)
+
 	// 현재 위치중인 페이지
-	const [currentPage, setCurrentPage] = useState<number>(1)
+	const [currentPage, setCurrentPage] = useState<number>(reduxPageNumber)
 	// firstPage 값은 제일 앞의 값을 뜻함
 	// 1, 11, 21 ....
 	const [firstPage, setFirstPage] = useState<number>(1)
@@ -71,7 +88,13 @@ const PageNation = (params: { pageSize: number }) => {
 	}
 
 	const handlePageChange = (index: number) => {
+		const pageData: NowPageType = {
+			key: params.location,
+			status: index,
+		}
+
 		setCurrentPage(index)
+		dispatch(setPageNation(pageData))
 	}
 
 	return (
