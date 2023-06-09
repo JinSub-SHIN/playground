@@ -4,6 +4,7 @@ import { RootState } from 'redux/reducer/rootReducer'
 import { Col, Input, Row, Form } from 'antd'
 import { getSearchData } from 'api/axios/search/service'
 import { CustomButton } from '../Button/CustomButton'
+import { ButtonTitle } from '../Button/ButtonTitle'
 
 export interface SearchParam {
 	whereToSearch: string
@@ -46,12 +47,13 @@ const SearchInput = (params: SearchIconParams) => {
 							/>
 						</Form.Item>
 					</HeaderCol>
-					<HeaderCol flex="90px">
+					<HeaderCol>
 						<Form.Item>
 							<CustomButton
 								type="primaryButton"
+								size="auto"
 								htmlType="submit"
-								title={'검색'}
+								title={<ButtonTitle title="검색" />}
 							/>
 						</Form.Item>
 					</HeaderCol>
