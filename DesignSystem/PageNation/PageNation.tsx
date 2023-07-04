@@ -9,9 +9,9 @@ const PagingDiv = styled.div`
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	gap: 15px;
+	gap: 0px;
 	display: flex;
-	margin-top: 50px;
+	margin-top: 25px;
 	width: 100%;
 	justify-content: center;
 `
@@ -19,7 +19,7 @@ const PagingDiv = styled.div`
 const NumberDiv = styled.div`
 	min-width: 400px;
 	display: flex;
-	gap: 15px;
+	gap: 18px;
 	justify-content: center;
 `
 
@@ -27,6 +27,8 @@ const CurrentDiv = styled.div`
 	width: 20px;
 	font-weight: 700;
 	text-decoration: underline;
+	color: blue;
+	text-decoration-color: blue;
 `
 
 const DefaultDiv = styled.div`
@@ -90,7 +92,7 @@ const PageNation = (params: { pageSize: number; location: string }) => {
 			key: params.location,
 			status: index,
 		}
-
+		console.log(currentPage, pageData)
 		setCurrentPage(index)
 		dispatch(setPageNation(pageData))
 	}
@@ -98,21 +100,29 @@ const PageNation = (params: { pageSize: number; location: string }) => {
 	return (
 		<>
 			<PagingDiv>
-				<DefaultDiv onClick={handleFrontPage}>{'<'}</DefaultDiv>
-				<NumberDiv>
-					{pageSize.map((item, index) => {
-						if (item == currentPage) {
-							return <CurrentDiv key={index}>{item}</CurrentDiv>
-						} else {
-							return (
-								<DefaultDiv key={index} onClick={() => handlePageChange(item)}>
-									{item}
-								</DefaultDiv>
-							)
-						}
-					})}
-				</NumberDiv>
-				<DefaultDiv onClick={handleNextPage}>{'>'}</DefaultDiv>
+				{pageSize.length !== 0 && (
+					<>
+						<DefaultDiv onClick={handleFrontPage}>{'<'}</DefaultDiv>
+
+						<NumberDiv>
+							{pageSize.map((item, index) => {
+								if (item == currentPage) {
+									return <CurrentDiv key={index}>{item}</CurrentDiv>
+								} else {
+									return (
+										<DefaultDiv
+											key={index}
+											onClick={() => handlePageChange(item)}
+										>
+											{item}
+										</DefaultDiv>
+									)
+								}
+							})}
+						</NumberDiv>
+						<DefaultDiv onClick={handleNextPage}>{'>'}</DefaultDiv>
+					</>
+				)}
 			</PagingDiv>
 		</>
 	)
