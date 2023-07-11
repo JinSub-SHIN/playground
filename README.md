@@ -1,9 +1,7 @@
 # playground
 
 ## DesginSystem & RecycleComponent
-### [Button](https://seed-xenon-5f6.notion.site/Buttons-fc9948d7ccde4611a24118576bfe6875)
-### [SearchInput](https://seed-xenon-5f6.notion.site/SearchInput-c97f1c460fd745fb8a051cffcb42683d)
-### [GridCard](https://seed-xenon-5f6.notion.site/GirdCard-b24821d3c1b24aafba58c9c91fa06915)
+### [DesginSystem](https://js93.notion.site/4c0a21446c6f49c991caa201ec5110ae?v=2eb8f9a406194f3a84a2d799d6ab27e6&pvs=4)
 
 
 ## ScrollMagic
